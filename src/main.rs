@@ -1,6 +1,5 @@
 use std::io;
 
-pub const PI: f32 = 3.1415926535897932384;
 pub const ROPANI: f32 = 5476.0;
 pub const AANA: f32 = 342.25;
 pub const PAISA: f32 = 85.560360991;
@@ -26,28 +25,35 @@ impl Convertible for Land {
     }
 }
 
-fn _extract_values_area(_area: String) -> [f32; 4] {
-    [1.0, 1.0, 1.0, 1.0]
-}
+fn get_input(arrays: &mut [f32]) {
+    let mut area = String::new();
+    io::stdin()
+        .read_line(&mut area)
+        .expect("Failed to read the line");
+    let mut i: usize = 0;
 
-fn get_input(message: &String) -> f32 {
-    loop {
-        println!("{}", message);
-
-        let mut area = String::new();
-        io::stdin()
-            .read_line(&mut area)
-            .expect("Failed to read the line");
+    for token in area.split("/") {
+        let result = token.trim().parse();
+        if result.is_ok() {
+            arrays[i] = result.unwrap();
+        }
+        i += 1;
     }
+    println!(
+        "{}(Ropani) {}(Aana) {}(Paisa) {}(Dam)",
+        &arrays[0], &arrays[1], &arrays[2], &arrays[3]
+    );
 }
 
 fn main() {
-    let instruction = String::from("Enter your Land size in formate  Ropani-Aana-Paisa-Dam here");
+    println!("Enter your Land size in formate  Ropani-Aana-Paisa-Dam here");
+    let mut arrays: [f32; 4] = [0.0, 0.0, 0.0, 0.0];
+    get_input(&mut arrays);
     let land = Land {
-        ropani: get_input(&instruction),
-        aana: get_input(&instruction),
-        paisa: get_input(&instruction),
-        dam: get_input(&instruction),
+        ropani: arrays[0],
+        aana: arrays[1],
+        paisa: arrays[2],
+        dam: arrays[3],
     };
     println!(
         "Your Area Conversion is: {}(Ropani) {}(Aana) {}(Paisa) {}(Dam) ===> {}(Square Feet)",
