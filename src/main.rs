@@ -31,18 +31,13 @@ fn get_input(arrays: &mut [f32]) {
         .read_line(&mut area)
         .expect("Failed to read the line");
     let mut i: usize = 0;
-
-    for token in area.split("/") {
+    for token in area.split("-") {
         let result = token.trim().parse();
         if result.is_ok() {
             arrays[i] = result.unwrap();
         }
         i += 1;
     }
-    println!(
-        "{}(Ropani) {}(Aana) {}(Paisa) {}(Dam)",
-        &arrays[0], &arrays[1], &arrays[2], &arrays[3]
-    );
 }
 
 fn main() {
